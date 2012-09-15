@@ -1,5 +1,4 @@
-load File.join(File.dirname(__FILE__), 'lib', 'development.rb')
+source "http://rubygems.org"
 
-source :rubygems
-
+# Specify your gem's dependencies in tvd-alpha_omega.gemspec
 gemspec
