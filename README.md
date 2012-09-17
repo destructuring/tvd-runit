@@ -1,4 +1,4 @@
-tvd-alpha_omega
+tvd-runit
 ===============
 
-deploy conventionsfrom alpha_omega
+runit services

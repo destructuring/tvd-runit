@@ -1,14 +1,14 @@
 # -*- encoding: utf-8 -*-
 $:.push File.expand_path("../lib", __FILE__)
-require "tvd-alpha_omega/version"
+require "tvd-runit/version"
 
 Gem::Specification.new do |s|
-  s.name        = "tvd-alpha_omega"
-  s.version     = TVDinner::AlphaOmega::VERSION
+  s.name        = "tvd-runit"
+  s.version     = TVDinner::Runit::VERSION
   s.author      = "Tom Bombadil"
   s.email       = "amanibhavam@destructuring.org"
-  s.homepage    = "https://github.com/destructuring/tvd-alpha_omega"
-  s.summary     = "tvdinner: tvd-alpha_omega"
+  s.homepage    = "https://github.com/destructuring/tvd-runit"
+  s.summary     = "tvdinner: tvd-runit"
   s.description = s.summary
   s.license     = "Apache 2.0"
 

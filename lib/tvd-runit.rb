@@ -1,7 +1,7 @@
-require "tvd-alpha_omega/version"
+require "tvd-runit/version"
 
 module TVDinner
-  module AlphaOmega
+  module Runit
     # Your code goes here...
   end
 end

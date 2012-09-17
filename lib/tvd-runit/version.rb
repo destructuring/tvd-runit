@@ -1,5 +1,5 @@
 module TVDinner
-  module TVDinner::AlphaOmega
+  module TVDinner::Runit
     VERSION = File.read(File.dirname(__FILE__) + '/../../VERSION')
   end
 end
