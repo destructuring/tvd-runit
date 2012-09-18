@@ -19,7 +19,6 @@
 
 define :runit_service, :services_defined => nil, :only_if => false, :options => Hash.new do
   params[:template_name] ||= params[:name]
-  params[:restart] ||= "restart"
   params[:env] ||= {}
 
   svdir = "#{params[:services_defined]}/#{params[:name]}"
@@ -63,18 +62,5 @@ define :runit_service, :services_defined => nil, :only_if => false, :options => 
       cookbook "runit"
       variables :value => value
     end
-  end
-
-  execute "#{params[:restart]}_#{params[:name]}_service" do
-    command "sv #{params[:restart]} #{params[:name]}"
-    subscribes :run, resources(:cookbook_file => "#{svdir}/run"), :delayed
-    action :nothing
-  end
-
-  execute "hup_#{params[:name]}_log" do
-    command "sv hup #{params[:name]}/log"
-    subscribes :run, resources(:cookbook_file => "#{svdir}/log/run")
-    subscribes :run, resources(:template => "#{svdir}/log/config")
-    action :nothing
   end
 end
