@@ -21,25 +21,38 @@ define :runit_service, :services_defined => nil, :only_if => false, :options => 
   params[:template_name] ||= params[:name]
   params[:env] ||= {}
 
-  svdir = "#{params[:services_defined]}/#{params[:name]}"
+  svc_defined = "#{params[:services_defined]}/#{params[:name]}"
+  svc_run = "#{params[:services_run]}/#{params[:name]}"
+  svc_current = "#{params[:services_current]}/#{params[:name]}"
 
-  directory svdir
+  directory params[:services_defined]
+  directory params[:services_run]
 
-  cookbook_file "#{svdir}/run" do
+  directory svc_defined
+  directory svc_run
+
+  cookbook_file "#{svc_defined}/run" do
     mode 0755
     source "sv-#{params[:template_name]}-run"
     cookbook params[:cookbook] if params[:cookbook]
   end
+  link "#{svc_run}/run" do
+    to "#{svc_current}/run"
+  end
 
-  directory "#{svdir}/log"
+  directory "#{svc_defined}/log"
+  directory "#{svc_run}/log"
 
-  cookbook_file "#{svdir}/log/run" do
+  cookbook_file "#{svc_defined}/log/run" do
     mode 0755
     source "sv-log-run"
     cookbook "runit"
   end
+  link "#{svc_run}/log/run" do
+    to "#{svc_current}/log/run"
+  end
 
-  template "#{svdir}/log/config" do
+  template "#{svc_defined}/log/config" do
     mode 0644
     source "sv-log-config.erb"
     cookbook "runit"
@@ -47,8 +60,14 @@ define :runit_service, :services_defined => nil, :only_if => false, :options => 
       variables :options => params[:options]
     end
   end
+  link "#{svc_run}/log/config" do
+    to "#{svc_current}/log/config"
+  end
 
-  directory "#{svdir}/env"
+  directory "#{svc_defined}/env"
+  link "#{svc_run}/env" do
+    to "#{svc_current}/env"
+  end
 
   runit_env = {
     "PATH" => ENV['PATH'],
@@ -56,7 +75,7 @@ define :runit_service, :services_defined => nil, :only_if => false, :options => 
   }
 
   runit_env.merge(params[:env]).each do |varname, value|
-    template "#{svdir}/env/#{varname}" do
+    template "#{svc_defined}/env/#{varname}" do
       source "envdir.erb"
       mode 0644
       cookbook "runit"
