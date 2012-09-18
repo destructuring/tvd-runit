@@ -1,0 +1,4 @@
+s<%= @options[:max_log_size] ? @options[:max_log_size] : node[:runit][:max_log_size]%>
+n<%= @options[:num_old_logs] ? @options[:num_old_logs] : node[:runit][:num_old_logs]%>
+t<%= @options[:max_log_time] ? @options[:max_log_time] : node[:runit][:max_log_time]%>
+!gzip
