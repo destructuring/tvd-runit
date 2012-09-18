@@ -25,11 +25,11 @@ define :runit_service, :services_defined => nil, :only_if => false, :options => 
   services_run     = "#{params[:project_dir]}/service"
   services_defined = "#{params[:release_dir]}/service"
 
-  svc_defined = "#{params[:services_defined]}/#{params[:name]}"
-  svc_run = "#{params[:services_run]}/#{params[:name]}"
-  svc_current = "#{params[:services_current]}/#{params[:name]}"
+  svc_defined = "#{services_defined}/#{params[:name]}"
+  svc_run = "#{services_run}/#{params[:name]}"
+  svc_current = "#{services_current}/#{params[:name]}"
 
-  directory params[:services_defined]
+  directory services_defined
 
   directory svc_defined
   
@@ -72,7 +72,7 @@ define :runit_service, :services_defined => nil, :only_if => false, :options => 
   end
 
   unless params[:project_dir] == params[:release_dir]
-    directory params[:services_run]
+    directory services_run
 
     directory svc_run
     directory "#{svc_run}/log"
