@@ -1,4 +1,3 @@
-default[:runit][:services_run] = "/etc/service"
 default[:runit][:num_old_logs] = 5
 default[:runit][:max_log_size] = 500000000
 default[:runit][:max_log_time] = 86400
