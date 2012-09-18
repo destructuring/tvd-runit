@@ -65,20 +65,6 @@ define :runit_service, :services_defined => nil, :only_if => false, :options => 
     end
   end
 
-  ruby_block "supervise_#{params[:name]}_sleep" do
-    block do
-      (1..6).each {|i| sleep 1 unless ::FileTest.pipe?("#{svdir}/supervise/ok") }
-    end
-    not_if { FileTest.pipe?("#{svdir}/supervise/ok") || $testrun }
-  end
-
-  ruby_block "supervise_#{params[:name]}_log_sleep" do
-    block do
-      (1..6).each {|i| sleep 1 unless ::FileTest.pipe?("#{svdir}/log/supervise/ok") }
-    end
-    not_if { FileTest.pipe?("#{svdir}/supervise/log/ok") || $testrun }
-  end
-
   execute "#{params[:restart]}_#{params[:name]}_service" do
     command "sv #{params[:restart]} #{params[:name]}"
     subscribes :run, resources(:cookbook_file => "#{svdir}/run"), :delayed
