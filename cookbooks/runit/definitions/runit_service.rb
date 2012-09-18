@@ -21,6 +21,10 @@ define :runit_service, :services_defined => nil, :only_if => false, :options => 
   params[:template_name] ||= params[:name]
   params[:env] ||= {}
 
+  services_current = "#{params[:project_dir]}/current/service"
+  services_run     = "#{params[:project_dir]}/service"
+  services_defined = "#{params[:release_dir]}/service"
+
   svc_defined = "#{params[:services_defined]}/#{params[:name]}"
   svc_run = "#{params[:services_run]}/#{params[:name]}"
   svc_current = "#{params[:services_current]}/#{params[:name]}"
@@ -67,7 +71,7 @@ define :runit_service, :services_defined => nil, :only_if => false, :options => 
     end
   end
 
-  unless svc_defined == svc_run
+  unless params[:project_dir] == params[:release_dir]
     directory params[:services_run]
 
     directory svc_run
