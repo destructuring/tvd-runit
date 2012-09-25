@@ -17,10 +17,8 @@
 # limitations under the License.
 #
 
-define :runit_service, :only_if => false, :options => Hash.new do
+define :runit_service, :only_if => false, :options => Hash.new, :env => Hash.new, :activate => true do
   params[:template_name] ||= params[:name]
-  params[:env] ||= {}
-  params[:activate] ||= false
 
   services_current = "#{params[:project_dir]}/current/service"
   services_run     = "#{params[:project_dir]}/service"
