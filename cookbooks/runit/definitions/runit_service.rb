@@ -32,7 +32,7 @@ define :runit_service, :only_if => false, :options => Hash.new, :env => Hash.new
 
   directory svc_defined
   
-  unless paras[:activate]
+  unless params[:activate]
     execute "#{svc_defined}/down" do
       command "touch #{svc_defined}/down"
       creates "touch #{svc_defined}/down"
