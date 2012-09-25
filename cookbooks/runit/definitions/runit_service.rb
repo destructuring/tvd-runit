@@ -17,9 +17,10 @@
 # limitations under the License.
 #
 
-define :runit_service, :services_defined => nil, :only_if => false, :options => Hash.new do
+define :runit_service, :only_if => false, :options => Hash.new do
   params[:template_name] ||= params[:name]
   params[:env] ||= {}
+  params[:activate] ||= false
 
   services_current = "#{params[:project_dir]}/current/service"
   services_run     = "#{params[:project_dir]}/service"
@@ -33,6 +34,13 @@ define :runit_service, :services_defined => nil, :only_if => false, :options => 
 
   directory svc_defined
   
+  unless paras[:activate]
+    execute "#{svc_defined}/down" do
+      command "touch #{svc_defined}/down"
+      creates "touch #{svc_defined}/down"
+    end
+  end
+
   cookbook_file "#{svc_defined}/run" do
     mode 0755
     source "sv-#{params[:template_name]}-run"
@@ -71,13 +79,14 @@ define :runit_service, :services_defined => nil, :only_if => false, :options => 
     end
   end
 
-  unless params[:project_dir] == params[:release_dir]
+  unless params[:project_dir] == params[:release_dir] || params[:activate] == false
     directory services_run
 
     directory svc_run
-    directory "#{svc_run}/log"
-    link "#{svc_run}/run" do
 
+    directory "#{svc_run}/log"
+
+    link "#{svc_run}/run" do
       to "#{svc_current}/run"
     end
 
