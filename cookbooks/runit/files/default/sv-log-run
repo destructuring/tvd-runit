@@ -1,6 +1,4 @@
-#!/bin/bash
+#!/bin/bash -exfu
 
-set -e
 exec 2>&1
-
 exec svlogd -tt -b 10000  .
