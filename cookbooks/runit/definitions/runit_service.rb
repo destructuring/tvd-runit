@@ -28,7 +28,7 @@ define :runit_service, :only_if => false, :options => Hash.new, :env => Hash.new
   svc_run = "#{services_run}/#{params[:name]}"
   svc_current = "#{services_current}/#{params[:name]}"
 
-  directory services_defined
+  directory services_defined unless params[:project_dir] == params[:release_dir]
 
   directory svc_defined
   
