@@ -28,8 +28,6 @@ define :runit_service, :only_if => false, :options => Hash.new, :env => Hash.new
   svc_run = "#{services_run}/#{params[:name]}"
   svc_current = "#{services_current}/#{params[:name]}"
 
-  directory services_defined
-
   directory svc_defined
   
   unless params[:activate]
