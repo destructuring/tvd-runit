@@ -20,9 +20,9 @@
 define :runit_service, :only_if => false, :options => Hash.new, :env => Hash.new, :activate => true do
   params[:template_name] ||= params[:name]
 
-  services_current = "#{params[:project_dir]}/current/service"
-  services_run     = "#{params[:project_dir]}/service"
-  services_defined = "#{params[:release_dir]}/service"
+  services_current = "#{node[:project_dir]}/#{node[:app_dir]}/service"
+  services_run     = "#{node[:project_dir]}/service"
+  services_defined = "#{node[:release_dir]}/service"
 
   svc_defined = "#{services_defined}/#{params[:name]}"
   svc_run = "#{services_run}/#{params[:name]}"
@@ -78,8 +78,6 @@ define :runit_service, :only_if => false, :options => Hash.new, :env => Hash.new
   end
 
   unless params[:project_dir] == params[:release_dir] || params[:activate] == false
-    directory services_run
-
     directory svc_run
 
     directory "#{svc_run}/log"
