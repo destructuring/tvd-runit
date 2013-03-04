@@ -1,0 +1,12 @@
+--- 
+run_list: 
+- tvdinner
+tvd: 
+  class: Runit
+  name: runit
+  author: Tom Bombadil
+  email: amanibhavam@destructuring.org
+  summary: runit services
+  description: runit services
+  homepage: http://destructuring.org/tvd-runit
+  git_url: https://github.com/destructuring/tvd-runit
