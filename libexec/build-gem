@@ -12,19 +12,33 @@ shome="$(unset CDPATH; cd -P -- "$(dirname -- "$BASH_SOURCE")/.." && pwd -P)"
 # load a jason bourne library
 source "$shome/libexec/_jason"
 
-# define command line options:
-DEFINE_string 'name' "$(basename "$shome")" 'name of gem' 'n'
-
 # entry point
 function main {
-  local pth_gemspec="$shome/$FLAGS_name.gemspec"
-  if [[ ! -e "$pth_gemspec" ]]; then
-    logger_fatal "could not find gemspec $pth_gemspec"
-    exit 1
+  if [[ "$#" = 0 ]]; then
+    set -- "$shome/$(basename "$shome").gemspec"
   fi
 
   cd "$shome"
+
+  for pth_gemspec in "$@"; do
+    if [[ -d "$pth_gemspec" ]]; then
+      local a
+      for a in $(set +f; ls -d $pth_gemspec/*); do
+        if [[ -d "$a" ]]; then
+          pushd $a > /dev/null
+          (set +f; rm -f *.gem)
+          (export EDIT_$(basename ${a//-/_})=1; libexec/build-gem)
+          (set +f; mv *.gem $shome/vendor/cache/)
+          popd > /dev/null
+        fi
+      done
+    elif [[ -e "$pth_gemspec" ]]; then
   gem build "$pth_gemspec"
+    else
+      logger_fatal "could not find gemspec $pth_gemspec"
+      exit 1
+    fi
+  done
 }
 
 require sub "$BASH_SOURCE" "$@"

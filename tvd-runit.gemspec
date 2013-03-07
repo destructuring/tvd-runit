@@ -5,7 +5,7 @@ require "tvd-runit/version"
 
 Gem::Specification.new do |s|
   s.name        = "tvd-runit"
-  s.version     = ENV['EDIT_TVD_RUNIT'] ? "#{TVDinner::Runit::VERSION}.rc#{%x(git log --max-count=1 --pretty=format:%ct)}" : TVDinner::Runit::VERSION
+  s.version     = ENV['EDIT_tvd_vagrant'] ? "#{TVDinner::Runit::VERSION}.rc#{%x(git log --max-count=1 --pretty=format:%ct)}" : TVDinner::Runit::VERSION
   s.homepage    = "http://destructuring.org/tvd-runit"
   s.license     = "Apache 2.0"
 

@@ -1,0 +1,15 @@
+{
+  "run_list": [
+    "tvdinner"
+  ],
+  "tvd": {
+    "author": "Tom Bombadil",
+    "class": "Runit",
+    "description": "runit services",
+    "email": "amanibhavam@destructuring.org",
+    "git_url": "https://github.com/destructuring/tvd-runit",
+    "homepage": "http://destructuring.org/tvd-runit",
+    "name": "runit",
+    "summary": "runit services"
+  }
+}
