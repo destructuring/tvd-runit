@@ -96,7 +96,7 @@ GEM
     treetop (1.4.12)
       polyglot
       polyglot (>= 0.3.1)
-    tvd-tvdinner (0.0.18)
+    tvd-tvdinner (0.0.19)
       chef
     yajl-ruby (1.1.0)
 
